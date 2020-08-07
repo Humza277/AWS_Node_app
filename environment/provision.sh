@@ -16,7 +16,7 @@ sudo chmod 666 reverse-proxy.conf
 echo "server{
   listen 80;
   location / {
-      proxy_pass http://192.168.10.100:3000;
+      proxy_pass http://54.72.247.231:3000;
   }
 }" >> reverse-proxy.conf
 sudo ln -s /etc/nginx/sites-available/reverse-proxy.conf /etc/nginx/sites-enabled/reverse-proxy.conf
