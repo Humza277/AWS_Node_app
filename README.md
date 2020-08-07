@@ -35,11 +35,13 @@ Enter the modules you need in order to run your application then exit the file
 To sync the folders, you will need to create a setup.sh file INSIDE your environment folder
 
 Inside the setup file add the ssh links needed to sync your aws folder to the AWS environment 
+    
     scp -i ~/.ssh/DevOpsStudents.pem -r ~/Documents/aws/app/ ubuntu@'    IP ADDRESS GOES HERE          ':/home/ubuntu/
     
 Once this is done exit the file 
 
 Inside the environment folder, run the setup.sh file by using the command
+    
     ./ setup.sh 
 
 This will Call the provision file 
