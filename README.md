@@ -59,3 +59,38 @@ To stop the application
     cd app
     pm2 stop 0
  
+# Making sure it runs on port 8080
+ ssh into the VM 
+    
+    ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@54.72.247.231
+    
+cd to the upper level, do this twice 
+cd into etc 
+cd into nginx 
+cd into the conf.d
+run the command sudo nano nodeapp.conf
+add this 
+    
+    server {
+        listen       80;
+        server_name  development.local;
+
+        location / {
+            proxy_pass http://127.0.0.1:3000/;
+        }
+       }
+cd back to top level 
+cd into app 
+runt the command 
+    
+    sudo systemctl restart nginx
+    
+Then run the command 
+    
+    pm2 start app.js
+    
+Go to 
+    
+    http://54.72.247.231/
+
+It will be running without the : 3000
