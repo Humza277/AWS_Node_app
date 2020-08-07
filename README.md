@@ -44,4 +44,18 @@ Inside the environment folder, run the setup.sh file by using the command
     
     ./ setup.sh 
 
-This will Call the provision file 
+This will sync the app folder to the Ubuntu image file, the provision file  and finally it wil call the provision file to run
+installing all of Modules needed to run the applications  
+
+# To stop the application
+
+
+Open GIT BASH as admin and run this command to access the VM
+    
+    ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@54.72.247.231
+    
+To stop the application 
+    
+    cd app
+    pm2 stop 0
+ 
