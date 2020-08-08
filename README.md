@@ -52,7 +52,7 @@ installing all of Modules needed to run the applications
 
 Open GIT BASH as admin and run this command to access the VM
     
-    ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@54.72.247.231
+    ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@34.254.180.111
     
 To stop the application 
     
@@ -62,7 +62,7 @@ To stop the application
 # Making sure it runs on port 8080
  ssh into the VM 
     
-    ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@54.72.247.231
+    ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@34.254.180.111
     
 cd to the upper level, do this twice 
 cd into etc 
@@ -91,6 +91,6 @@ Then run the command
     
 Go to 
     
-    http://54.72.247.231/
+    http://34.254.180.111/
 
 It will be running without the : 3000
