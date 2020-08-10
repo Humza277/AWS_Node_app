@@ -99,20 +99,32 @@ It will be running without the : 3000
 # Getting Posts to work 
 
 In app provision file put this export here 
+    
     echo "export DB_HOST=mongodb://DATABASE IPV4 GOES HERE:27017/posts" >> ~/.bashrc
+
 Add the line to call the bashrc file 
 
 
 Provision the DBec2 to have mongo running using the command 
+    
     sudo systemctl start mongod
+
 You should see a green light that tells you mongo is running 
+
 Make sure your DB EC2 has the port 27017 and set to the security group of the webapp ec2
+
 This is to make sure the servers are aware of each other 
 
 ssh in to your web app 
+    
+    write env to see if your export command works 
+
 cd into the app folder 
+
 run pm2 start app.js
+
 Then npm install
+
 The database should now be populated 
 
 Put in your web app ip address, it should be running now 
