@@ -136,9 +136,11 @@ The database should now be populated
 run 
     
     node app.js 
+    
 if that doesnt work run 
     
     npm test 
+    
 if it doesnt work run 
     
     pm2 kill 
