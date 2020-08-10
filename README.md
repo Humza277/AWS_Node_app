@@ -36,7 +36,7 @@ To sync the folders, you will need to create a setup.sh file INSIDE your environ
 
 Inside the setup file add the ssh links needed to sync your aws folder to the AWS environment 
     
-    scp -i ~/.ssh/DevOpsStudents.pem -r ~/Documents/aws/app/ ubuntu@'    IP ADDRESS GOES HERE          ':/home/ubuntu/
+    scp -i ~/.ssh/DevOpsStudents.pem -r ~/Documents/aws/app/ ubuntu@'    'WEB SERVER IP GOES HERE'          ':/home/ubuntu/
     
 Once this is done exit the file 
 
@@ -52,7 +52,7 @@ installing all of Modules needed to run the applications
 
 Open GIT BASH as admin and run this command to access the VM
     
-    ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@34.254.180.111
+    ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@ 'WEB SERVER IP GOES HERE'
     
 To stop the application 
     
@@ -62,7 +62,7 @@ To stop the application
 # Making sure it runs on port 8080
  ssh into the VM 
     
-    ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@34.254.180.111
+    ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@ 'WEB SERVER IP GOES HERE'
     
 cd to the upper level, do this twice 
 
@@ -98,7 +98,7 @@ Then run the command
     
 Go to 
     
-    http://34.254.180.111/
+    'WEB SERVER IP GOES HERE'
 
 It will be running without the : 3000
 
@@ -150,3 +150,108 @@ then
     pm2 start app.js     
     
 Put in your web app ip address, it should be running now 
+
+#Integrating a CI/CD Pipeline
+We Start with the Continuous integration first:
+
+To do this, create a new freestyle project on your jenkins 
+for the settings
+    
+    General:
+    Discard old builds
+        
+        log rotation
+            Max days = 1
+    Git Hub project 
+        project URL = Your https URL 
+    
+    365 Connector 
+        follow the instructions to create a 365 webhhok and past the link in the box
+    
+    restrict whrere this project can run 
+        sparta ubuntu 
+    
+    Source code management:
+        git - Yes
+            Repo URL is the SSH one you can get 
+            Credentials are linked with a ssh certificate you have made already 
+            
+        Branches to build 
+            */Dev
+    
+    Build Triggers:
+        GitHub hook trigger for GITScm polling - yes 
+    
+    Build Environment
+        Provide Node & npm bin/ folder to PATH - auto filled boxes is what you want
+    
+    Build:
+        Execute Shell
+            
+            cd app
+            npm install 
+            #sudo killall node 
+            npm test
+    
+    Post-build Actions:
+        Build Other Projects - give id of other project to run once this CI is done 
+        
+        Git Publisher 
+            Push only if Build Succeeds - Yes
+            Merge Results - Yes
+            
+            Branches 
+                Branches to push  - master
+                Target remote name - origin
+
+You have now done your CI, we move onto Continuous Deployment 
+
+    
+    General:
+    Discard old builds
+        
+        log rotation
+            Max days = 1
+    Git Hub project 
+        project URL = Your https URL 
+    
+    365 Connector 
+        follow the instructions to create a 365 webhhok and past the link in the box
+    
+    
+    Source code management:
+        git - Yes
+            Repo URL is the SSH one you can get 
+            Credentials are linked with a ssh certificate you have made already 
+            
+        Branches to build 
+            */Dev
+    
+    Build Triggers:
+        Build after other projects are built
+            Projects to watch - ID of your CI build
+    
+    Build Environment
+        Provide Node & npm bin/ folder to PATH - auto filled boxes is what you want
+        
+        SSH Agent
+            Credentials - Specific credentials - add the ssh key you used to log to your EC2 web app 
+            
+    
+    Build:
+        Execute Shell
+            
+            scp -o "StrictHostKeyChecking=no" -r app/ ubuntu@ 'WEB SERVER IP GOES HERE' :/home/ubuntu/
+            scp -o "StrictHostKeyChecking=no" -r environment/ ubuntu@'WEB SERVER IP GOES HERE':/home/ubuntu/environment/
+            
+            ssh -o "StrictHostKeyChecking=no" ubuntu@'WEB SERVER IP GOES HERE' <<EOF
+                sudo bash ./environment/app/provision.sh
+                cd app
+                sudo pm2 kill
+                sudo pm2 start app.js 
+               
+            EOF
+
+You have now made a CD, congrats you have now made a CI/CD Pipeline!
+
+Any changes that are pushed, will be reflected upon inside your web server 
