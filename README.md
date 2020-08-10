@@ -151,7 +151,7 @@ then
     
 Put in your web app ip address, it should be running now 
 
-#Integrating a CI/CD Pipeline
+# Integrating a CI/CD Pipeline
 We Start with the Continuous integration first:
 
 To do this, create a new freestyle project on your jenkins 
@@ -251,6 +251,11 @@ You have now done your CI, we move onto Continuous Deployment
                 sudo pm2 start app.js 
                
             EOF
+
+
+Now go onto your AWS EC2 Dashboard and allow for incoming rules the IP address of your Jenkins server 
+
+
 
 You have now made a CD, congrats you have now made a CI/CD Pipeline!
 
