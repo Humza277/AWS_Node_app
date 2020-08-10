@@ -65,10 +65,15 @@ To stop the application
     ssh -i ~/.ssh/DevOpsStudents.pem ubuntu@34.254.180.111
     
 cd to the upper level, do this twice 
+
 cd into etc 
+
 cd into nginx 
+
 cd into the conf.d
+
 run the command sudo nano nodeapp.conf
+
 add this 
     
     server {
@@ -80,7 +85,9 @@ add this
         }
        }
 cd back to top level 
+
 cd into app 
+
 runt the command 
     
     sudo systemctl restart nginx
@@ -104,7 +111,6 @@ In app provision file put this export here
 
 Add the line to call the bashrc file 
 
-
 Provision the DBec2 to have mongo running using the command 
     
     sudo systemctl start mongod
@@ -121,10 +127,24 @@ ssh in to your web app
 
 cd into the app folder 
 
-run pm2 start app.js
-
-Then npm install
+Then 
+    
+    npm install
 
 The database should now be populated 
 
+run 
+    
+    node app.js 
+if that doesnt work run 
+    
+    npm test 
+if it doesnt work run 
+    
+    pm2 kill 
+
+then 
+    
+    pm2 start app.js     
+    
 Put in your web app ip address, it should be running now 
