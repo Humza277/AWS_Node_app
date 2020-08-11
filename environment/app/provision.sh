@@ -24,7 +24,7 @@ sudo cp /home/ubuntu/environment/nginx.conf /etc/nginx/sites-available/default.c
 sudo ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
 sudo service nginx restart
 # DB HOST for Development Environment (Virtual machines)
-echo export DB_HOST="mongodb://34.244.194.71:27017/posts" >> ~/.bashrc
+echo export DB_HOST="mongodb://52.19.33.20:27017/posts" >> ~/.bashrc
 cd /home/ubuntu/app
 sudo npm install
 sudo pm2 start app.js
